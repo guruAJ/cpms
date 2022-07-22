@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery-ui-timepicker-addon@1.6.3",
+      "destination": "wwwroot/lib/jquery-ui-timepicker-addon/"
+    },
+    {
+      "library": "jquery-ui-multidatespicker@1.6.6",
+      "destination": "wwwroot/jquery-ui-multidatespicker/"
+    },
+    {
+      "library": "bootstrap-sweetalert@1.0.1",
+      "destination": "wwwroot/lib/bootstrap-sweetalert/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/datatables/"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+﻿@model CPMS_AUTO.Models.MProject
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        History
+                    </div>
+
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 mb-4">
+            <div class="card ">
+                <div class="card-header"><h3 class="card-title">Select Project</h3></div>
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <select asp-for="Name" class="form-control sel" asp-items="@(new SelectList(ViewBag.Projects, "Id", "Name"))"></select>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title">Details</h3>
+                    <div class="text-danger">@ViewBag.messageDelete</div>
+                </div>
+
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/DeveloperJs/AddAction.js"></script>*@

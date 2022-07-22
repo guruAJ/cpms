@@ -1,0 +1,391 @@
+﻿@model CPMS_AUTO.Models.MProject
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">*@
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Add Project
+                    </div>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        @if (ViewBag.dnone == false)
+        {
+            <div class="col-12 mb-1">
+                <div class="card ">
+                    <a asp-action="isSuccess" asp-route-id="true" class="close text-right"> &times;</a>
+                    <div class="card-header"><h3 class="card-title">Add Project</h3></div>
+
+                    <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                        <form asp-action="Save">
+                            <div class="row">
+                                <div class="col-6 mb-4">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" placeholder="Enter Name" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ComponentId" class="control-label"></label>
+                                        <select asp-for="ComponentId" class="form-control" asp-items="@(new SelectList(ViewBag.AllComponent, "Id", "Name",1))"></select>
+                                        <span asp-validation-for="ComponentId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="SponsorId" class="control-label"></label>
+                                        @*<input asp-for="SponsorId" class="form-control" />*@
+                                        <select asp-for="SponsorId" class="form-control" asp-items="@(new SelectList(ViewBag.AllSponsor, "Id", "Name"))"></select>
+                                        <span asp-validation-for="SponsorId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ICID" class="control-label"></label>
+                                        @*<input asp-for="ICID" class="form-control" />*@
+                                        <select asp-for="ICID" class="form-control" asp-items="@(new SelectList(ViewBag.AllOfficer, "UserID", "UserID"))"></select>
+                                        <span asp-validation-for="ICID" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="VendorId" class="control-label"></label>
+                                        <select asp-for="VendorId" class="form-control" asp-items="@(new SelectList(ViewBag.AllVendors, "Id", "VendorName"))"></select>
+                                        <span asp-validation-for="VendorId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-4">
+                                    <div class="form-group">
+                                        <label asp-for="StatusCode" class="control-label"></label>
+                                        @*<input asp-for="StatusCode" class="form-control" />*@
+                                        <select asp-for="StatusCode" class="form-control" asp-items="@(new SelectList(ViewBag.AllStatus, "Id", "Name"))"></select>
+                                        <span asp-validation-for="StatusCode" class="text-danger"></span>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label asp-for="VettingCode" class="control-label"></label>
+
+                                            <select asp-for="VettingCode" class="form-control" asp-items="@(new SelectList(ViewBag.AllVetting, "Id", "Description"))"></select>
+                                            <span asp-validation-for="VettingCode" class="text-danger"></span>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label"></label>
+                                        <input asp-for="Remarks" class="form-control" placeholder="Enter Remarks" />
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="GrantId" class="control-label"></label>
+                                        <select asp-for="GrantId" class="form-control" asp-items="@(new SelectList(ViewBag.AllGrants, "Id", "GrantName"))"></select>
+                                        <span asp-validation-for="GrantId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Amount" class="control-label"></label>
+                                        <input asp-for="Amount" class="form-control" placeholder="Enter Amt." />
+                                        <span asp-validation-for="Amount" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mt-5">
+                                        <label class="control-label"></label>
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.dnoneRemarks == false)
+        {
+            <div class="col-12 mb-1">
+                <div class="card ">
+                    <a asp-action="isSuccess" asp-route-id="true" class="close text-danger text-right"> &times;</a>
+                    <div class="card-header"><h3 class="card-title">Add Remarks</h3></div>
+
+                    <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                        <form asp-action="SaveRemarks">
+                            <div class="row">
+                                @*<div class="text-danger">@ViewBag.remarksmessage</div>*@
+                                <div class="col-6 mb-4">
+                                    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" disabled />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label"></label>
+                                        <input asp-for="Remarks" class="form-control" placeholder="Enter Remarks" />
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"></label>
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-4">
+                                    <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+
+                                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                                            <table class="table table-bordered table-striped mb-0">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Srl.
+                                                        </th>
+                                                        <th>
+                                                            Remarks
+                                                        </th>
+                                                        <th>
+                                                            Remarks by
+                                                        </th>
+                                                        <th>
+                                                            Remarks On
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (ViewBag.RemarksAllData != null)
+                                                    {
+                                                        int count = 0;
+                                                        @foreach (var item in (IEnumerable<CPMS_AUTO.Models.MRemarks>)ViewBag.RemarksAllData)
+                                                        {
+                                                            count++;
+                                                            <tr>
+                                                                <td>
+                                                                    <span>@count</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-success">@Html.DisplayFor(modelItem => item.Remarks)</span>
+
+
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-warning"></span>@Html.DisplayFor(modelItem => item.CreatedBy)
+                                                                </td>
+                                                                <td>
+                                                                    <span class="text-warning"></span>@Html.DisplayFor(modelItem => item.CreatedOn))
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title">All Project Details</h3>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="">
+                            @{
+                                var item1 = (IEnumerable<CPMS_AUTO.Models.MProject>)ViewBag.AllData;
+
+                            }
+                            Total <span id="lblTotal" class="ml-3 border border-secondary b px-2 py-1">@item1.Count()</span>
+                        </div>
+                        @*<div class="form-group">
+
+                                <select id="drpEmpList" class="form-control" asp-for="Type">
+                                    <option value="">--Select--</option>
+                                    <option value="1">Project</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+
+                                    <input asp-for="Search" class="form-control" />
+                                    <span asp-validation-for="Search" class="text-danger"></span>
+                                </div>
+
+                            </div>*@
+                        <a asp-action="isSuccess" asp-route-id="false" class="btn btn-primary btn-sm">Add Project</a>
+                    </div>
+                    <div class="text-danger">@ViewBag.messageDelete</div>
+                </div>
+
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                        <table class="table table-bordered table-striped mb-0" id="table_id">
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ComponentId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SponsorId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ICID)
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.StatusCode)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.GrantId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Amount)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.VendorId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Remarks)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedOn)
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.AllData != null)
+                                {
+                                    @foreach (var item in (IEnumerable<CPMS_AUTO.Models.MProject>)ViewBag.AllData)
+                                    {
+
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ComponentName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SponsorName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Officer)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StatusName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GrantName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Amount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VendorName)
+                                            </td>
+                                            @*<td>
+                                                    @Html.DisplayFor(modelItem => item.VettingName)
+                                                </td>*@
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remarks)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                                            </td>
+                                            <td style="width:23%">
+                                                <a asp-action="index" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                                                <a asp-action="Remarks" asp-route-id="@item.Id" class="btn btn-warning">Remarks</a>
+                                                @*<a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-success">Details</a>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>*@
+@*<script type="text/javascript" charset="utf8" src="~/datatables/js/jquery.dataTables.js"></script>*@
+<script src="~/js/dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+        $(document).on("change", "#ComponentId", function () {
+            debugger
+        
+            BindData($("#ComponentId").val());
+        });
+    });
+    function BindData(Id) {
+        var listItem = "";
+        listItem = "<option value='0'>-- Select ICID --</option>";
+        $("#ICID").html(listItem);
+
+        //  alert(Id);
+
+        $.ajax({
+            url: '/Project/GetICID1',
+            data: { "ComponentId": Id },
+            type: 'POST',
+
+            success: function (response) {
+                debugger;
+                if (response != "null") {
+                    if (response == -3) {
+                        window.location.href = "/UserLogin";//Session expired
+                    }
+                    else if (response == -1) {
+                        $("#intPost-msg").addClass("text-danger");
+                        $("#intPost-msg").removeClass("text-green");
+                        $("#intPost-msg").html(errormsg);
+                    }
+                    else if (response == 0) {
+                        //
+                    }
+                    else {
+                        //listItem = "<option value='0'>-- Select State --</option>";
+                        for (var i = 0; i < response.length; i++) {
+                            listItem += '<option value="' + response[i].id + '">' + response[i].idAndName + '</option>';
+                        }
+                        $("#ICID").html(listItem);
+                    }
+                }
+                else {
+                    $("#intPost-msg").addClass("text-danger");
+                    $("#intPost-msg").removeClass("text-green");
+                    $("#intPost-msg").html(errormsg001);
+                }
+            },
+            error: function (result) {
+                $("#intPost-msg").addClass("text-danger");
+                $("#intPost-msg").removeClass("text-green");
+                $("#intPost-msg").html(errormsg002);
+            }
+        });
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

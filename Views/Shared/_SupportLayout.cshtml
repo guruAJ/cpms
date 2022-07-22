@@ -1,0 +1,224 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using CPMS_AUTO.Helpers;
+@using CPMS_AUTO.Models;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @if (ViewData["Title"] != null || ViewData["Title"].ToString() != "")
+    {
+        <title>
+            @ViewData["Title"];
+        </title>
+    }
+    else
+    {
+        <title>
+            @ViewData["Title"] -CPMS_AUTO;
+        </title>
+    }
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="~/css/style.css" rel="stylesheet" />
+
+    <link href="~/css/extra.css" rel="stylesheet" />
+
+    <link href="~/css/background.css" rel="stylesheet" />
+
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+
+    <link href="~/css/Custom.css" rel="stylesheet" />
+
+    @*<style>
+            .nav-link {
+                border: none;
+                outline: none;
+                padding: 10px 16px;
+               /* background-color: #f1f1f1;*/
+                cursor: pointer;
+                font-size: 18px;
+            }
+
+                 Style the active class, and buttons on mouse-over
+                .active, .nav-link:hover {
+                    background-color: #666;
+                    color: white;
+                    padding:2px 2px;
+                }
+        </style>*@
+
+</head>
+
+@{
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(Context.Session, "User");
+}
+<body class="nav-fixed">
+    <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
+        <a class="navbar-brand" href="#"><img src="~/Images/dgis.png" style="margin-right: 149px;"/></a><span style="margin-left:-156px"><h4>CPMS DGIS</h4></span>
+
+        @*<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i data-feather="menu"></i></button>*@
+
+        <ul class="navbar-nav align-items-center ml-auto">
+            <li class="nav-item dropdown no-caret mr-2 dropdown-user">
+                <a class="dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="lblUsername1" class="font-weight-500 mr-2 text-black">Welcome : @Logins.UserID</span><span class="btn btn-icon btn-transparent-dark"><img src="/Images/profile.png" /></span></a>
+                <div class="dropdown-menu dropdown-menu-right border-0 pb-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
+                    <h6 class="dropdown-header d-flex align-items-center">
+                        <img class="dropdown-user-img" src="/Images/profile.png" />
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-details-name">@Logins.UserID</div>
+                        </div>
+                    </h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/Login/Logout" id="btnLogout">
+                        <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                        Logout
+                    </a>
+                    @*<a class="dropdown-item" href="/Login/Logout" id="btnLogout">
+                            <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                            Logout
+                        </a>*@
+                    @*<a class="dropdown-item" href="/ChangePassword/Index" id="btnChangePassword">
+                            <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                            ChangePassword
+                        </a>*@
+                </div>
+            </li>
+            <li class="mr-3">
+                <a class="dropdown-item bg-danger text-white" href="/Login/Logout" id="btnLogout">
+                    <div class="dropdown-item-icon bg-danger"><i data-feather="log-out"></i></div>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sidenav shadow-right sidenav-light">
+                <div class="sidenav-menu">
+                    <div class="nav accordion" id="accordionSidenav">
+                        <div class="sidenav-menu-heading">Main</div>
+                        @if (@Logins.UserID == "CO")
+                        {
+                            <a class="nav-link" href="/Hrms/Dashboard">
+                                <div class="nav-link-icon"><i data-feather="command"></i></div>
+                                @*Support Dashboard*@Overall Instln Status
+                            </a>
+
+                            <a class="nav-link hide" href="/Hrms/GetUnitTable">
+                                <div class="nav-link-icon"><i data-feather="command"></i></div>
+                                Status View
+                            </a>
+                            @*<a class="nav-link" href="/Hrms/SummaryDashboard">
+            <div class="nav-link-icon"><i data-feather="command"></i></div>
+                Summary Dashboard
+            </a>*@
+                        }
+                        <a class="nav-link" href="/Hrms/SummaryDashboard">
+                            <div class="nav-link-icon"><i data-feather="command"></i></div>
+                            @*Summary Dashboard*@ Complaints Summary
+
+                        </a>
+                        @if (@Logins.UserID == "hrms")
+                        {
+                            <!--<a class="nav-link" href="#">
+                                <div class="nav-link-icon"><i data-feather="command"></i></div>-->
+                                @*Support Dashboard*@ <!--Overall Instln Status
+                            </a>-->
+                        }
+                        @if (@Logins.UserID == "iqmp")
+                        {
+                            <!--<a class="nav-link" href="#">
+                                <div class="nav-link-icon"><i data-feather="command"></i></div>-->
+                                @*Support Dashboard*@ <!--Overall Instln Status
+                            </a>-->
+                        }
+                        <div class="sidenav-menu-heading">Master</div>
+                        @if (@Logins.UserID == "CO")
+                        {
+                            <a class="nav-link" href="/Hrms/COSupport">
+                                <div class="nav-link-icon"><i data-feather="command"></i></div>
+                                @*Add Support*@ New/Edit Complaints
+                            </a>
+                        }
+
+                        @if (@Logins.UserID != "CO")
+                        {
+                            <a class="nav-link" href="/Hrms/Index">
+                                <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                                @*Add Support*@ New/Edit Complaints
+                            </a>
+                        }
+                        <div class="sidenav-menu-heading">Reports</div>
+                        @if (@Logins.UserID == "CO")
+                        {
+                            <a class="nav-link" href="/Hrms/GetCountByUnit">
+                                <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                                No of Complaints
+                            </a>
+                        }
+
+                        @*@if (@Logins.UserID == "CO")
+        {*@
+                        <a class="nav-link" href="/Hrms/SearchByDate">
+                            <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+                            Datewise Complaints
+                        </a>
+                        @*<a class="nav-link" href="/Hrms/Record">
+            <div class="nav-link-icon"><i data-feather="plus-circle"></i></div>
+            Search By Unit/Sus
+        </a>*@
+
+                        @*}*@
+
+                    </div>
+                </div>
+                <div class="sidenav-footer">
+                    <div class="sidenav-footer-content">
+                        <div class="sidenav-footer-subtitle"></div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <footer class="border-top footer text-muted mb-5" style="height:1rem;">
+        <div class="container" style="margin-left: 278px; margin-top:35px;">
+            Copyright @@2022 Developed by ASDC, DGIS:
+            Sponsor Dte: DGIS
+
+        </div>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+@*<script>
+    $(document).ready(function () {
+        var header = document.getElementById("layoutSidenav");
+        var btns = header.getElementsByClassName("nav-link");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+    })
+    function savesubcat() {
+        return null
+    }
+</script>*@

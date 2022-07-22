@@ -1,0 +1,427 @@
+﻿@model CPMS_AUTO.Models.MProjectSupport
+@using System.Collections.Generic
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+}
+<style>
+    .hide{
+        display:none;
+    }
+    .sweet-warning{
+    background-color: #2f35df;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">*@
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Project Support
+                    </div>
+
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class=row>
+        <div class="col-12 mb-1">
+            <div class="card ">
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    <form>
+                        <div class="row">
+                            <div class="col-3 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1" style="margin-left:70px">
+                                    <label asp-for="Project" class="control-label"></label><br />
+                                    <input type="radio" asp-for="Project" value="HRMS" id="myproject" class="radioBtnClass" style="margin-right: 7px;" />HRMS
+                                    <input type="radio" asp-for="Project" value="IQMP" class="radioBtnClass" style="margin-right: 7px;" />IQMP
+                                    @*<select asp-for="Project" id="Proj" class="form-control" asp-items="@(new SelectList(ViewBag.AllProjects, "Id","Name"))"></select>*@
+                                    @*<span asp-validation-for="Project" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                            <div class="col-3 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1" style="margin-left:40px">
+                                    <label asp-for="SUS_No" class="control-label"></label>
+                                    <input asp-for="SUS_No" class="form-control" id="mysus" placeholder="Enter Sus No." style="width:60%;" />
+                                    <span @*asp-validation-for="SUS_No" *@class="text-danger" id="errormsg"></span>
+                                </div>
+                            </div>
+                            <div class="col-3 mb-4" style="margin-top: 29px;margin-left: 25px;">
+                                <div class="form-group1">
+                                    <label class="control-label"></label>
+                                    <input type="button" value="Search" onclick="return Pro()" class="btn btn-primary" style="width: 100px;" />
+                                    @*<a asp-action="GetProjectData" asp-route-id="@Model.SUS_No" class="btn btn-primary btn-sm">See Details</a>*@
+                                </div>
+                            </div>
+                            <div class="col-2 mb-4" style="margin-top: 29px">
+                                <div class="form-group1 hide" id="btnAdd">
+                                    <label class="control-label"></label>
+                                    @*<input type="button" value="Add" class="btn btn-primary"/>*@
+                                    <input type="button" value="Add" onclick="return NewPage()" class="btn btn-primary" style="width: 100px;" />
+                                </div>
+                            </div>
+                            @*<div class="col-3 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1" style="margin-left:60px">
+                                    <label class="control-label">Unit</label>
+                                    <input id="myunit" class="form-control" placeholder="Enter Unit" style="width:60%;"/>
+                                </div>
+                            </div>
+                            <div class="col-3 mt-4">
+                                <div class="form-group1 hide" id="SaveBtn">
+                                    <label class="control-label"></label>
+                                    <input type="button" value="Save" onclick="return SUSUNIT()" class="btn btn-primary" style="width: 100px;" />
+                                </div>
+                            </div>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <input asp-for="Id" id="ProjectId" type="hidden" class="form-control" placeholder="Enter Sus No." style="width:60%;" />
+                            </div>
+                            <div class="col-2">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @{
+            Html.RenderPartial("_GetProjectData");
+            //Html.RenderPartial("_GetProjectData", new List<CPMS_AUTO.Models.MProjectSupport>());
+        }
+    </div>
+</div>
+@* ******************************************@
+<form method="post" asp-action="SaveModal" asp-controller="ProjectSupport">
+    <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Customer Details Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="col-4">
+                            <div class="form-group">
+                                <label>Query:</label>
+                                <input type="text" asp-for="Query" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Query Raised By:</label>
+                                <input type="text" asp-for="QueryRaisedBy" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>SusNo:</label>
+                                <input type="text" id="modalSUS"  asp-for="SUS_No" class="form-control" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Project</label>
+                                <select asp-for="Project" id="modalProject" class="form-control" required>
+                                    <option value="">Please select</option>
+                                    <option value="HRMS">HRMS</option>
+                                    <option value="IQMP">IQMP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Mode Of Query</label>
+                                <select asp-for="ModeOfQuery" class="form-control" required>
+                                    <option value="">Please select</option>
+                                    <option value="Telephone" selected>Telephone</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Letter">Letter</option>
+                                    <option value="Fax">Fax</option>
+                                </select>
+                            </div>
+                        </div>
+                        @*<div class="col-4">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <select asp-for="Status" class="form-control" required>
+                                    <option value="Open" selected="selected">Open</option>
+                                    <option value="Close">Close</option>
+                                </select>
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="row">
+                        @*<div class="col-4">
+                            <label>Complain Category</label>
+                            <select asp-for="Cpl_Category" class="form-control" required>
+                                <option value="">Please Select</option>
+                                <option value="Fully Functional">Fully Functional</option>
+                                <option value="Partially Functional">Partially Functional</option>
+                                <option value="Not Functioning">Not Functioning</option>
+                                <option value="No Interaction">No Interaction</option>
+                            </select>
+                        </div>*@
+                        @*<div class="col-4">
+                            <div class="form-group">
+                                <label>Unit:</label>
+                                <input type="text" asp-for="Unit" class="form-control" required/>
+                            </div>
+                        </div>*@
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="hide">Query Date:</label>
+                                <input type="text" id="datepicker" asp-for="QueryDate" class="form-control" type="hidden"/>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input type="text" asp-for="Id" class="form-control hide" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@****************************************************@
+
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<script src="~/js/dataTables.js"></script>
+<script src="~/js/sweetalert2.min.js"></script>
+
+<script src="~/js/sweetalert.min.js"></script>
+<script>
+     $(document).ready(function(){
+         //debugger;
+         $(document).on("change", "#mysus", function () {
+             var susdata = $("#mysus").val();
+             console.log(susdata);
+             $.ajax({
+                 type: 'POST',
+                 url: '/ProjectSupport/ValidateSus',
+                 data: {"susdata":susdata},
+                 success: function (response) {
+                     if(response == "True"){
+                         $("#errormsg").html(" ")
+                         $("#btnAdd").removeClass("hide");
+                     }
+                     if(response == "False"){
+                         $("#errormsg").html("Sus is not valid")
+                         //debugger;
+                         //$("#SaveBtn").removeClass("hide");
+                         $("#btnAdd").addClass("hide");
+                     }
+             },
+             });
+         });
+     });
+ </script>
+
+ <script>
+    function SUSUNIT(){
+        var sus = $("#mysus").val();
+        var unit= $("#myunit").val();
+        var _msusno= {};
+        _msusno.SUS = sus;
+        _msusno.Unit = unit;
+        
+        $.ajax({
+              type: 'POST',
+              url: '/ProjectSupport/SubmitData',
+              data: {"_msusno":_msusno},
+              success: function (response) {
+                    /*alert(response);*/
+                }
+                /*error: function (response) {
+                    //alert(response.d);
+                }*/
+    });
+    }
+ </script>
+
+<script>
+    function ResetData()
+    {
+       //$('#SUS_No').val("").show();
+       $('#Query').val("").show();
+       /*$('#QueryDate').datepicker({
+                    format:'mm/dd/yyyy',
+                }).datepicker("setDate",'now');*/
+       $('#QueryRaisedBy').val("").show();
+       //$('#Project').val("").show();
+       $('#ModeOfQuery').val("Telephone").show();
+       $('#Status').val("").show();
+       $('#Reply').val("").show();
+    }
+</script>
+<script>
+    function NewPage(){
+        var mydata = {}
+        var sus = $("#mysus").val();
+        var project = $('input[name="Project"]:checked').val();
+        $('#modalSUS').val(sus);
+        $('#modalProject').val(project);
+        $('#exampleModal').modal('show');
+            ResetData();
+        }
+</script>
+
+<script>
+    Date.prototype.toDDMMYYYY = function(){
+    return this.getDate() + "/" + (this.getMonth()+1) + "/" + this.getFullYear()
+}
+</script>
+
+<script>
+    function Pro(){
+        var listdata="";
+        //var sus = $("#mysus").val();
+        //var project = $('input[name="Project"]:checked').val();
+        if($("input[type='radio'].radioBtnClass").is(':checked')) {
+        var project = $("input[type='radio'].radioBtnClass:checked").val();
+        //alert(project);
+        }
+        $.ajax({
+              type: 'POST',
+              url: '/ProjectSupport/GetProjectData',
+              data: {"project":project},
+              success: function (response) {
+                // debugger;
+                    for(var i=0; i<response.length; i++)
+                    {
+                        listdata+='<tr>';
+                        //listdata+='<td>'+response[i].suS_No+'</td>';
+                        listdata+='<td> <span id="spnid" class="d-none">'+response[i].id+'</span>'+response[i].id+'</td>';
+                        listdata+='<td>'+response[i].query+'</td>';
+                        listdata+='<td>'+new Date(response[i].queryDate.replace(/\//g, ' ')).toDDMMYYYY()+'</td>'  
+                        //listdata+='<td>'+response[i].reply+'</td>';
+                        //listdata+='<td>'+response[i].repliedDate+'</td>';
+                        listdata+='<td>'+response[i].queryRaisedBy+'</td>';
+                        listdata+='<td>'+response[i].modeOfQuery+'</td>';
+                        //listdata+='<td>'+response[i].status+'</td>'
+                        if(response[i].status=="Open"){
+                        listdata+='<td><input type="button" value="Open" class="btnstatus btn btn-primary"></td>'
+                        }
+                        else{
+                        listdata+='<td><input type="button" value="Close" class="btnstatus btn btn-primary"></td>'
+                        } 
+                        listdata+='<td><input type="button" value="Edit" class="btnedt btn btn-primary"></td>'
+                        listdata+='</tr>';
+                    }
+                     $('#tbldata').html(listdata);
+
+                     $('#table_id').DataTable({
+                     retrieve: true,
+                     lengthChange: true,
+                     ordering: true,
+                     "order": [[1, "desc"]],
+       
+                });
+                },
+                error: function (response) {
+                    //alert(response.d);
+                }
+    });
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+        $(document).on('click','.btnstatus',function(){
+            swal("Please select the option", {
+                  buttons: {
+                    open:{
+                        text:"Open",
+                        value: "Open",
+                        className:'sweet-warning'
+                    },
+                    close:{
+                        text:"Closed",
+                        value: "Closed",
+                        className:'sweet-warning'
+                    },
+                    cancel: "Same as given"
+                  },
+                })
+                .then((value) => {
+                  switch (value) {
+                 
+                    case "Open":
+                      swal("The case is Open");
+                      break;
+                 
+                    case "Closed":
+                      swal("The case is Close");
+                      break;
+                  }
+                  var data = value;
+                  var id = $(this).closest("tr").find("#spnid").html();
+                  var _status= {};
+                  _status.Status = data;
+                  _status.Id = id;
+                   $.ajax({
+                   type: 'POST',
+                   url: '/ProjectSupport/SubmitStatus',
+                   data: {"id":id,"status":data},
+                   success: function (response) {
+                   Pro();
+                         /*alert(response);*/
+                    }
+                });
+                    
+           });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var Id="";
+         $(document).on('click', '.btnedt', function() {
+         //     $('#table_id tr').each(function() {
+                Id = $(this).closest("tr").find("#spnid").html();
+                //});
+              //alert(Id);
+              $.ajax({
+              type: 'POST',
+              url: '/ProjectSupport/GetProjectDataById',
+              data: {"Id":Id},
+              success: function (response) {
+                  debugger
+                   //$('.modal-body').html(response);
+                   $('#modalSUS').val(response.suS_No);
+                   $('#Query').val(response.query);
+                   //$('#QueryDate').val(response.queryDate);
+                   $('#QueryRaisedBy').val(response.queryRaisedBy);
+                   $('#modalProject').val(response.project);
+                   $('#ModeOfQuery').val(response.modeOfQuery);
+                   $('#Status').val(response.status).hide();
+                   $('#Reply').val(response.reply).hide();
+                   $('#exampleModal').modal('show');
+                },
+                error: function (response) {
+                    //alert(response.d);
+                }
+            });
+         });
+    });
+</script>

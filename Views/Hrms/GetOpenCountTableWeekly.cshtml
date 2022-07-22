@@ -1,0 +1,167 @@
+﻿@model CPMS_AUTO.Models.MHrms
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "GetOpenCountTableWeekly";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+}
+
+<script src="~/Auto/js/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script src="~/Auto/js/jquery-ui.min.js" type="text/javascript"></script>
+<link href="~/Auto/css/jquery-ui.css" rel="Stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div id="hriq">
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Weekly Open Cases - HRMS and IQMP
+                    </div>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<style>
+    .wrapHeight {
+        height: auto;
+    }
+
+    .getMargin {
+        margin-left: 498px;
+        margin-top: 4px;
+    }
+</style>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar wrapHeight" id="wrapA">
+                        @*<h6 style="text-align: center; margin-left: -242px;" id="hed1"><u>HRMS</u></h6>*@
+                        @*<div class="getMargin">
+                                @{
+                                    var item1 = (IEnumerable<CPMS_AUTO.Repository.RepositoryHrms.UnitCountAndStatus>)ViewBag.UnitData;
+                                }
+                                <span style="font-size: xx-large;"><u>Total Count</u></span><span id="lblTotal" class="ml-3 border border-secondary b px-2 py-1" style="font-size: xx-large;"><u>@item1.Count()</u></span>
+                            </div>*@
+                        <table class="table table-bordered table-striped mb-0 hrmstab" id="table_id3">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        S/No
+                                    </th>
+
+                                    <th>
+                                        Unit
+                                    </th>
+
+                                    <th>
+                                        SUS No
+                                    </th>
+
+                                    <th>
+                                        Project
+                                    </th>
+
+                                    <th>
+                                        Query
+                                    </th>
+
+                                    <th>
+                                        Query Date
+                                    </th>
+
+                                    <th>
+                                        Reply
+                                    </th>
+
+                                    <th>
+                                        Telephone
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.OpenCountTableWeekly != null)
+                                {
+                                    int count = 0;
+                                    @foreach (var item in (IEnumerable<CPMS_AUTO.Models.MHrms>)ViewBag.OpenCountTableWeekly)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td>
+                                                <span>@count</span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Unit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Sus_No)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Project)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Query)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.QueryDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Reply)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Telephone)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table_id3').DataTable();
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#myunit").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Hrms/AutoCompleteUnit/',
+                    data: { "term": request.term },
+                    type: "POST",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#checksus").val(i.item.val);
+            },
+            minLength: 0
+        }).focus(function () {
+            $(this).autocomplete("search");
+        });
+    });
+</script>

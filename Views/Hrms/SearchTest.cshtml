@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Http
+@model CPMS_AUTO.Models.MSUSNo
+@inject IHttpContextAccessor Accessor
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+
+}
+
+<script src="~/Auto/js/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script src="~/Auto/js/jquery-ui.min.js" type="text/javascript"></script>
+<link href="~/Auto/css/jquery-ui.css" rel="Stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="~/css/Swal.min.css" />
+
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Search Using Dashboard
+                    </div>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table table-bordered table-striped mb-0" id="table_id">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Id)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SUS)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Unit)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Hrms)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Iqmp)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedOn)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedBy)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbldata">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/dataTables.js"></script>
+<script src="~/DeveloperJs/Dash.js"></script>
+<script src="~/js/Swal.min.js"></script>

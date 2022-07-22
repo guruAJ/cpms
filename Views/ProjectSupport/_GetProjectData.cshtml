@@ -1,0 +1,81 @@
+﻿@model CPMS_AUTO.Models.MProjectSupport
+<div class="col-12 mb-4">
+            <div class="card h-100">
+                @*<div class="card-header">
+                    <h3 class="card-title">All Project Details</h3>
+                </div>*@
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar" id="demo_info">
+
+                        <table class="table table-bordered table-striped mb-0" id="table_id">
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Id)
+                                    </th>
+                                    @*<th>
+                                        @Html.DisplayNameFor(model => model.SUS_No)
+                                    </th>*@
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Query)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QueryDate)
+                                    </th>
+                                    @*<th>
+                                        @Html.DisplayNameFor(model => model.Reply)
+                                    </th>*@
+                                    @*<th>
+                                        @Html.DisplayNameFor(model => model.RepliedDate)
+                                    </th>*@
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QueryRaisedBy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ModeOfQuery)
+                                    </th>
+                                   @* <th>
+                                        @Html.DisplayNameFor(model => model.Status)
+                                    </th>*@
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbldata">
+                                   @*  @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SUS_No)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Query)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.QueryDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Reply)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RepliedDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.QueryRaisedBy)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ModeOfQuery)
+                                            </td>
+                                        </tr>
+                                    }*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>

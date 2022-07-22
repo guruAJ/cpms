@@ -1,0 +1,298 @@
+﻿@using CPMS_AUTO.Helpers;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+}
+<style>
+
+    .container {
+        margin-top: 100px
+    }
+
+    .counter-box {
+        display: block;
+        background: #f6f6f6;
+        padding: 40px 20px 37px;
+        text-align: center
+    }
+
+        .counter-box p {
+            margin: 5px 0 0;
+            padding: 0;
+            color: #909090;
+            font-size: 18px;
+            font-weight: 500
+        }
+
+        .counter-box i {
+            font-size: 60px;
+            margin: 0 0 15px;
+            color: #d2d2d2
+        }
+
+    .counter {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+        color: #666;
+        line-height: 28px
+    }
+
+    .counter-box.colored {
+        background: #3acf87
+    }
+
+        .counter-box.colored p,
+        .counter-box.colored i,
+        .counter-box.colored .counter {
+            color: #fff
+        }
+
+    .heading-format {
+        margin-left: 606px;
+        margin-top: 15px;
+        margin-bottom: -25px;
+    }
+
+    .second-heading {
+        margin-left: 581px;
+        margin-bottom: -8px;
+        margin-top: 45px;
+    }
+</style>
+
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="margin-top: -100px;">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        @*Summary Dashboard*@ Complaints Summary
+                    </div>
+
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+@{
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(Context.Session, "User");  //@if (@Logins.UserID == "hrms"){}
+}
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header"><h3 class="card-title">@*Total Count*@</h3></div>
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    @if (@Logins.RoleType == 5)
+                    {
+                        <h1>HRMS</h1>
+                        <div class="row heading-format"><u><h4>Summary of All Cases</h4></u></div>
+                        <div class="row mt-4">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalCountSummaryHrms</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.OpenCountHrms</span>
+                                    <p class="text-white">@*<a class="text-white" href="/Hrms/OpenCaseHrms1"></a>*@Open Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.ClosedCountHrms</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row second-heading"><u><h4>Summary of Weekly Cases</h4></u></div>
+                        <div class="row mt-4">
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalWeeklyCountHrms</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyOpenCountHrms</span>
+                                    <p class="text-white">@*<a class="text-white" href="/Hrms/WeeklyOpenCaseHrms"></a>*@Open Cases</p>
+                                </div>
+                            </div>
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyCloseCountHrms</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-4 hide">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyOpenCountHrms</span>
+                                    <p class="text-white">Monthly Open Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4 hide">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyClosedCountHrms</span>
+                                    <p class="text-white">Monthly Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (@Logins.RoleType == 4)
+                    {
+                        <h1>IQMP</h1>
+                        <div class="row heading-format"><u><h4>Summary of All Cases</h4></u></div>
+                        <div class="row mt-4">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalCountSummaryIqmp</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.OpenCountIqmp</span>
+                                    <p class="text-white">@*<a class="text-white" href="/Hrms/OpenCaseIqmp1"></a>*@Open Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.ClosedCountIqmp</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row second-heading"><u><h4>Summary of Weekly Cases</h4></u></div>
+                        <div class="row mt-4">
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalWeeklyCountIqmp</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyOpenCountIqmp</span>
+                                    <p class="text-white">@*<a class="text-white" href="/Hrms/WeeklyOpenCaseIqmp"></a>*@Open Cases</p>
+                                </div>
+                            </div>
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyCloseCountIqmp</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-4 hide">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyOpenCountHrms</span>
+                                    <p class="text-white">Monthly Open Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4 hide">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyClosedCountIqmp</span>
+                                    <p class="text-white">Monthly Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (@Logins.RoleType == 3)
+                    {
+                        <h1>HRMS and IQMP</h1>
+                        <div class="row heading-format"><u><h4>Summary of All Cases</h4></u></div>
+                        <div class="row mt-4">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalCountSummary</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.OpenCount</span>
+                                    <p class="text-white"><a class="text-white" href="/Hrms/GetOpenCountTable">Open Cases</a></p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.ClosedCount</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row second-heading"><u><h4>Summary of Weekly Cases</h4></u></div>
+                        <div class="row mt-4">
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.TotalWeeklyCount</span>
+                                    <p class="text-white">Total Cases</p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-danger text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyOpenCount</span>
+                                    <p class="text-white"><a class="text-white" href="/Hrms/GetOpenCountTableWeekly">Open Cases</a></p>
+                                </div>
+                            </div>
+
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.WeeklyCloseCount</span>
+                                    <p class="text-white">Closed Cases</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-4 hide">
+                            <div class="four col-md-4">
+                                <div class="counter-box bg-primary text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyOpenCount</span>
+                                    <p class="text-white">Monthly Open Cases</p>
+                                </div>
+                            </div>
+                            <div class="four col-md-4 hide">
+                                <div class="counter-box bg-success text-white">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@ViewBag.MonthlyClosedCount</span>
+                                    <p class="text-white">Monthly Closed Cases</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,317 @@
+﻿@using Microsoft.AspNetCore.Http
+@model CPMS_AUTO.Models.MHrms
+@inject IHttpContextAccessor Accessor
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+}
+
+<script src="~/Auto/js/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script src="~/Auto/js/jquery-ui.min.js" type="text/javascript"></script>
+<link href="~/Auto/css/jquery-ui.css" rel="Stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div id="hriq">
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        No of Complaints
+                    </div>
+                    <div class="hide" id="hr">
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        No of Complaints - HRMS
+                    </div>
+                    <div class="hide" id="iq">
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        No of Complaints - IQMP
+                    </div>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<style>
+    .wrapHeight {
+        height: auto;
+    }
+
+    .getMargin {
+        margin-left: 498px;
+        margin-top: 4px;
+    }
+
+    .mywidth
+    {
+        width: 26%;
+    }
+</style>
+<div class="container mt-n10">
+    <div class=row>
+        <div class="col-12 mb-1">
+            <div class="card ">
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+
+                    <form asp-controller="Hrms" asp-action="GetCountByUnit">
+                        <div class="row">
+                            <div class="col-4 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1" style="margin-left:210px">
+                                    <label class="control-label" @*style="margin-left:136px"*@>Project</label><br />
+
+                                    @*<input type="radio" name="Project" value="HRMS" />HRMS
+                                        <input type="radio" name="Project" value="IQMP" />IQMP*@
+                                    <input asp-for="Project" value="HRMS" type="radio"> HRMS
+                                    <input asp-for="Project" value="IQMP" type="radio" style="margin-left:10px"> IQMP
+
+                                    @*<input type="radio" asp-for="Project" value="HRMS" name="rdobutton" class="radioBtnClass" /><span id="nyTXTHrms">HRMS</span>
+                                        <input type="radio" asp-for="Project" value="IQMP" name="rdobutton" class="radioBtnClass" style="margin-right: 7px;" /><span id="nyTXTIqmp">IQMP</span>*@
+                                    @*<select style="width: 137px; height: 38px;margin-left:136px;" asp-for="Project" id="proj"><option value="">--Select--</option><option value="HRMS">HRMS</option><option value="IQMP">IQMP</option></select>*@
+                                </div>
+                            </div>
+
+                            <!--<div class="col-4 mb-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group1">
+                                <label class="control-label" style="width: 65%;">Unit</label><br />-->
+                            @*<label asp-for="Unit" class="control-label"></label>*@
+                            <!--<input asp-for="Unit" class="form-control" id="myunit" placeholder="Enter Unit" />
+                                </div>
+                            </div>-->
+                            <div class="col-2 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1">
+                                    <label asp-for="FromDate" class="control-label"></label>
+                                    <input asp-for="ToDate" class="form-control" id="dateto" placeholder="Date To" />
+                                </div>
+                            </div>
+                            <div class="col-2 mb-4">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group1">
+                                    <label asp-for="ToDate" class="control-label"></label>
+                                    <input asp-for="FromDate" class="form-control" id="datefrom" asp-format="{0:dd/MM/yyyy}" placeholder="Date From" />
+                                </div>
+                            </div>
+                            <div class="col-4 mt-lg-5">
+                                <div class="form-group1">
+                                    <label class="control-label"></label>
+                                    <input type="submit" value="Search" class="btn btn-primary" style="width: 100px; margin-top: -20px;margin-left:17px" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar wrapHeight" id="wrapA">
+                        @*<h6 style="text-align: center; margin-left: -242px;" id="hed1"><u>HRMS</u></h6>*@
+                        @*<div class="getMargin">
+                                @{
+                                    var item1 = (IEnumerable<CPMS_AUTO.Repository.RepositoryHrms.UnitCountAndStatus>)ViewBag.UnitData;
+                                }
+                                <span style="font-size: xx-large;"><u>Total Count</u></span><span id="lblTotal" class="ml-3 border border-secondary b px-2 py-1" style="font-size: xx-large;"><u>@item1.Count()</u></span>
+                            </div>*@
+                        <table class="table table-bordered table-striped mb-0 hrmstab" id="table_id3">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        S/No
+                                    </th>
+
+                                    <th>
+                                        Unit
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th style="width:254px;">
+                                        Total Complaints
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.UnitDataHrms != null)
+                                {
+                                    int count = 0;
+                                    @foreach (var item in (IEnumerable<CPMS_AUTO.Repository.RepositoryHrms.UnitCountAndStatus>)ViewBag.UnitDataHrms)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td>
+                                                <span>@count</span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Unit)
+                                            </td>
+
+                                            <td class="hhh" id="hrmsid">
+                                                @if (item.Hrms == 1)
+                                                {
+                                                    <span>Not Installed</span>
+                                                }
+                                                @if (item.Hrms == 2)
+                                                {
+                                                    <span>Not Functional</span>
+                                                }
+                                                @if (item.Hrms == 3)
+                                                {
+                                                    <span>Partially Functional</span>
+                                                }
+                                                @if (item.Hrms == 4)
+                                                {
+                                                    <span>Fully Functional</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Count)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered table-striped mb-0 iqmptab hide" id="table_id4">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        S/No
+                                    </th>
+
+                                    <th>
+                                        Unit
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th style="width: 15px; padding-right: 0px;">
+                                        Total Complaints
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.UnitDataIqmp != null)
+                                {
+                                    int count = 0;
+                                    @foreach (var item in (IEnumerable<CPMS_AUTO.Repository.RepositoryHrms.UnitCountAndStatus1>)ViewBag.UnitDataIqmp)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td>
+                                                <span>@count</span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Unit)
+                                            </td>
+
+                                            <td class="qqq">
+                                                @if (item.Iqmp == 1)
+                                                {
+                                                    <span id="NI">Not Installed</span>
+                                                }
+                                                @if (item.Iqmp == 2)
+                                                {
+                                                    <span id="NF">Not Functional</span>
+                                                }
+                                                @if (item.Iqmp == 3)
+                                                {
+                                                    <span id="PF">Partially Functional</span>
+                                                }
+                                                @if (item.Iqmp == 4)
+                                                {
+                                                    <span id="FF">Fully Functional</span>
+                                                }
+
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Count)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+    });
+</script>
+
+<script>
+    $(function () {
+        var project = $('input[name=Project]:checked').val();
+        if (project == "HRMS") {
+            $('#table_id3').DataTable();
+            $(".iqmptab").hide();
+            $("#hriq").hide();
+            $("#iq").hide();
+        }
+        else if (project == "IQMP") {
+            $('#table_id4').DataTable();
+            $(".hrmstab").hide();
+            $('#table_id4').removeClass("hide");
+            $('#table_id3').addClass("hide");
+            $("#hriq").hide();
+            $("#hr").hide();
+
+        }
+        else {
+            $(".hhh1").hide();
+        }
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#myunit").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Hrms/AutoCompleteUnit/',
+                    data: { "term": request.term },
+                    type: "POST",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#checksus").val(i.item.val);
+            },
+            minLength: 0
+        }).focus(function () {
+            $(this).autocomplete("search");
+        });
+    });
+</script>
+@*<script src="~/DeveloperJs/Hrms.js"></script>*@

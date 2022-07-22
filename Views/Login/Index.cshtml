@@ -1,0 +1,102 @@
+﻿@model CPMS_AUTO.Models.Login
+
+@{
+    Layout = null;
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] CPMS_AUTO</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/css/Login.css" rel="stylesheet" />
+    @*<script src="https://unpkg.com/feather-icons"></script>*@
+    <script src="~/js/feather.min.js"></script>
+  
+</head>
+
+
+
+    <!--<div class="logo"> <img src="~/Images/dgis.png" alt=""> </div>
+
+    <form asp-action="Validate" class="p-3 mt-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+        <div class="form-field d-flex align-items-center">
+
+            <span class="far fa-user"></span>-->
+            @*<label asp-for="UserID" class="control-label"></label>*@
+            <!--<input asp-for="UserID" class="form-control" placeholder="Enter UserId" />
+            <span asp-validation-for="UserID" class="text-danger"></span>
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>-->
+            @*<label asp-for="Password" class="control-label"></label>*@
+            <!--<input asp-for="Password" class="form-control" placeholder="Enter Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </form>-->
+    <div id="global-loader" style="display: none;"> <img src="/Images/loader.svg" class="loader-img" alt="Loader"> </div>
+    <div class="page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="align-items-center col-lg-6 col-md-6 col-xl-7 d-flex login-img-block">
+                    <div class="mb-4 logo-sec">
+                        <div class=""><img src="~/Images/dgis.png" class="" alt="logo"></div>
+                        <h2 class="ml-sm-3"> CPMS <span>DGIS</span></h2>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-5 bg-white login-wrap">
+                    <div class="login py-2 py-sm-4">
+                        <div class="row">
+                            <div class="col-md-10 col-lg-10 col-xl-9 mx-auto">
+                                <div class="card-sigin">
+                                    <div class="main-signup-header login-form">
+                                        <h1 class="font-weight-bold text-center mb-0 mt-3 logo"><img src="~/Images/dgis.png" /></h1>
+                                        <p class="font-weight-normal text-center mb-4 mt-1">Kindly login with your login id and password here.</p>
+                                        <form asp-action="ValidateAsyncLogin" class="p-3 mt-3">
+                                            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                                            <div class="pb-3 mt-3">
+                                                <p class="error-msg mb-1 bg-danger" id="error-msg"><div class="alert-danger" asp-validation-summary="All">@ViewBag.ErrorMessage</div></p>
+                                                <div class="form-group">
+                                                    <label>Login Id</label>
+                                                    <input asp-for="UserID" class="form-control" placeholder="Enter UserId" value="" />
+                                                    @*<span asp-validation-for="UserID" class="text-danger"></span>*@
+                                                    <span class="field-icon"><i data-feather="lock"></i></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Password</label>
+                                                    <input asp-for="Password" class="form-control" placeholder="Enter Password" type="password" value="" />
+                                                    @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                                                    <span class="field-icon"><i data-feather="key"></i></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" value="Login" class="btn btn-primary" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <p><small></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End -->
+            </div>
+        </div>
+    </div>
+
+ 
+<script>
+    feather.replace()
+</script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

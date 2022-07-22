@@ -1,0 +1,166 @@
+﻿@model CPMS_AUTO.Models.Login;
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Add User
+                    </div>
+
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header"><h3 class="card-title">Create User</h3></div>
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    <form asp-action="Save">
+                        <div class="text-danger">@ViewBag.message</div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group d-none">
+                            <input asp-for="Id" class="form-control" />
+                            @*<span asp-validation-for="UserID" class="text-danger"></span>*@
+                            <span class="field-icon"><i data-feather="lock"></i></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleType" class="control-label"></label>
+                            @*<input asp-for="RoleType" class="form-control" />*@
+                            <select id="drpEmpList" class="form-control" asp-for="RoleType">
+                                <option value="">--Select--</option>
+                                <option value="1">Admin</option>
+                                <option value="2">User</option>
+                            </select>
+                            <span asp-validation-for="RoleType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ComponentId" class="control-label"></label>
+                            @*<input asp-for="ComponentId" class="form-control" />*@
+                            <select asp-for="ComponentId" class="form-control" asp-items="@(new SelectList(ViewBag.AllComponent, "Id", "Name"))"></select>
+                            <span asp-validation-for="ComponentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter Name" />
+                            @*<span asp-validation-for="UserID" class="text-danger"></span>*@
+                            <span class="field-icon"><i data-feather="lock"></i></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RankId" class="control-label"></label>
+                            <select asp-for="RankId" class="form-control" asp-items="@(new SelectList(ViewBag.AllRanks, "Id", "RankName"))"></select>
+                            <span asp-validation-for="RankId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserID" class="control-label"></label>
+                            <input asp-for="UserID" class="form-control" />
+                            <span asp-validation-for="UserID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" type="password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="card-title">All User Details</h3>
+                    <div class="text-danger">@ViewBag.messageDelete</div>
+                </div>
+                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RoleType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UserID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RankName)
+                                </th>
+                                @*<th>
+                                    @Html.DisplayNameFor(model => model.Password)
+                                </th>*@
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.MyData != null)
+                            {
+                                @foreach (var item in (IEnumerable<CPMS_AUTO.Models.Login>)ViewBag.MyData)
+                                {
+
+                            <tr>
+                                <td>
+                                    @{
+                                        string type = "";
+                                    }
+                                    @if (item.RoleType == 1)
+                                    {
+                                        type = "Admin";
+                                    }
+                                    else
+                                    {
+                                        type = "User";
+                                    }
+                                    @type
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RankName)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Password)
+                                </td>*@
+                                <td>
+                                    <a asp-action="index" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+
+                                    @*<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>*@
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

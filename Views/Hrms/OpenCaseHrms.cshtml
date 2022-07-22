@@ -1,0 +1,111 @@
+﻿@model CPMS_AUTO.Models.MHrms
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SupportLayout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css">
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Total Open Case
+                    </div>
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-12 mb-1">
+            <div class="card ">
+                <div class="card-header"><h3 class="card-title">Open Cases List Of Hrms</h3></div>
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    <form asp-action="SaveRemarks">
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="card-body h-100 d-flex flex-column1 justify-content-center pb-lg-5 pb-xl-4">
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                        <table class="table table-bordered table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Id)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Sus_No)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Unit)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Project)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Query)
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.QueryDate)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.QueryRaisedBy)
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewBag.OpenCaseDataHrms != null)
+                                                {
+                                                    @foreach (var item in (IEnumerable<CPMS_AUTO.Models.MHrms>)ViewBag.OpenCaseDataHrms)
+                                                    {
+                                                        <tr>
+                                                            <td id="itemid">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Sus_No)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Unit)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Project)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Query)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.QueryDate)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.QueryRaisedBy)
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        //$('#table_id').DataTable();
+        $('#table_id').DataTable({
+            "order": [[0, "desc"]]
+        });
+    });
+</script>

@@ -1,0 +1,122 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+
+    .container {
+        margin-top: 100px
+    }
+
+    .counter-box {
+        display: block;
+        background: #f6f6f6;
+        padding: 40px 20px 37px;
+        text-align: center
+    }
+
+        .counter-box p {
+            margin: 5px 0 0;
+            padding: 0;
+            color: #909090;
+            font-size: 18px;
+            font-weight: 500
+        }
+
+        .counter-box i {
+            font-size: 60px;
+            margin: 0 0 15px;
+            color: #d2d2d2
+        }
+
+    .counter {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+        color: #666;
+        line-height: 28px
+    }
+
+    .counter-box.colored {
+        background: #3acf87
+    }
+
+        .counter-box.colored p,
+        .counter-box.colored i,
+        .counter-box.colored .counter {
+            color: #fff
+        }
+</style>
+
+
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10" style="margin-top: -100px;">
+    <div class="container">
+        <div class="page-header-content pt-4">
+            <div class="align-items-center justify-content-between">
+                <h1 class="page-header-title">
+                    <div>
+                        <div class="page-header-icon"><i data-feather="activity"></i></div>
+                        Control Project Monitoring System Detail
+                    </div>
+                   
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-n10">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card-header"><h3 class="card-title">Total Count</h3></div>
+                <div class="card-body h-100 d-flex flex-column justify-content-center pb-lg-5 pb-xl-4">
+                    <div class="row">
+                        <div class="four col-md-4">
+                            <div class="counter-box bg-warning text-white">
+                                @{
+                                    var Sponsor = (IEnumerable<CPMS_AUTO.Models.MSponsor>)ViewBag.Sponsor;
+
+                                }
+                                <i class="fa fa-thumbs-o-up"></i> <span class="counter text-white">@Sponsor.Count()</span>
+                                                                  <p class="text-white">Total Sponsor</p>
+                            </div>
+                        </div>
+                        <div class="four col-md-4">
+                            <div class="counter-box bg-primary text-white">
+                                @{
+                                    var Status = (IEnumerable<CPMS_AUTO.Models.MStatus>)ViewBag.Status;
+
+                                }
+                                <i class="fa fa-group"></i> <span class="counter text-white">@Status.Count()</span>
+                                                            <p class="text-white">Total Status</p>
+                            </div>
+                        </div>
+                        @*<div class="four col-md-3">
+                            <div class="counter-box bg-info text-white">
+                                @{
+                                    var Vetting = (IEnumerable<CPMS_AUTO.Models.MVetting>)ViewBag.Vetting;
+
+                                }
+                                <i class="fa fa-shopping-cart"></i> <span class="counter text-white">@Vetting.Count()</span>
+                                                                    <p class="text-white">Total Vetting</p>
+                            </div>
+                        </div>*@
+                        <div class="four col-md-4">
+                            <div class="counter-box bg-success text-white">
+                                @{
+                                    var item1 = (IEnumerable<CPMS_AUTO.Models.MProject>)ViewBag.ProjectCount;
+
+                                }
+                                <i class="fa fa-user"></i> <span class="counter text-white">@item1.Count()</span>
+                                <p class="text-white">Total Projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
